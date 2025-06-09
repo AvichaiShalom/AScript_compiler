@@ -77,12 +77,13 @@ enum TokenType
     identifier
 };
 
+//ליצור בהיפ ולשמור פיינטר
 struct DFA {
     int state_machine[STATES][ASCII];
 
     void init_state_machine() {
         for (int s = 0; s < STATES; s++) {
-            for (int c = 0; c < ASCII; c++ ){
+            for (int c = 0; c < ASCII; c++){
                 state_machine[s][c] = ERROR;
             }
         }
