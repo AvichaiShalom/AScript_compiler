@@ -1,0 +1,3 @@
+C:/Users/avich/Desktop/AScript_compiler/build/CMakeFiles/AScript.dir
+C:/Users/avich/Desktop/AScript_compiler/build/CMakeFiles/edit_cache.dir
+C:/Users/avich/Desktop/AScript_compiler/build/CMakeFiles/rebuild_cache.dir
