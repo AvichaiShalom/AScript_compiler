@@ -7,6 +7,7 @@ using namespace std;
 enum TokenType
 {
     ERROR,
+    START,
 
     //===== DATA TYPES =====
     INT,
@@ -77,14 +78,12 @@ enum TokenType
     IDENTIFIER
 };
 
-
-//ליצור בהיפ ולשמור פיינטר
 struct DFA {
     int state_machine[STATES][ASCII];
     TokenType state_token_map[STATES];
 
     void init_state_token_map() {
-        state_token_map[0] = ERROR;
+        state_token_map[0] = START;
         state_token_map[1] = EQUAL;
         state_token_map[2] = IS_EQUAL;
         state_token_map[3] = PLUS;
@@ -176,6 +175,8 @@ struct DFA {
             state_machine[0][c-('a'-'A')] = 43;
         }
         state_machine[0]['\n'] = 0;
+        state_machine[0]['\t'] = 0;
+        state_machine[0]['\r'] = 0;
         state_machine[0][' '] = 0;
         state_machine[0]['='] = 1;
         state_machine[0]['+'] = 3;
@@ -539,27 +540,38 @@ struct DFA {
         }
         return state_machine[current_state][c];
     }
+
+    TokenType get_token_type(int state) {
+        if (state < 0 || state >= STATES) {
+            return ERROR;
+        }
+        return state_token_map[state];
+    }
 };
 
 struct Token {
     TokenType type;
-    std::string value;
+    string value;
     int line;
     int column;
 
-    Token(TokenType t, std::string v, int l, int c) : type(t), value(v), line(l), column(c) {}
+    Token(TokenType t, string v, int l, int c) : type(t), value(v), line(l), column(c) {}
     Token() : type(ERROR), value(""), line(-1), column(-1) {}
 };
 
 class Lexer {
     private:
         ifstream inFile;
+        DFA *dfa;
 
     public:
         Lexer(string fName):inFile(fName) {
             if (!inFile.is_open()) {
                 throw runtime_error("Failed to open file: " + fName);
             }
+            dfa = new DFA();
+            dfa->init_state_machine();  
+            dfa->init_state_token_map();
         }
         ~Lexer() {
             if (inFile.is_open()) {
@@ -568,5 +580,34 @@ class Lexer {
         }
 
         Token get_next_token() {
+            static int line = 1, column = 0;
+            char ch;
+            int current_state = 0;
+            int next_state = 0;
+            string token_value = "";
+
+            while(inFile.get(ch)) {
+                if (ch == '\n') {
+                    line++;
+                    column = 0;
+                }
+                column++;
+                next_state = dfa->get_next_state(current_state, ch);
+                if(next_state != START){
+                    if(next_state == -1) {
+                        if(dfa->get_token_type(current_state) == ERROR) {
+                            return Token();
+                        }
+                        else {
+                            inFile.unget();
+                            return Token(dfa->get_token_type(current_state), token_value, line, column);
+                        }
+                    }
+                    else {
+                        current_state = next_state;
+                        token_value += ch;
+                    }
+                }
+            }
         }
 };
