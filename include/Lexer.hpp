@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <stdexcept> // For runtime_error
 
 
@@ -117,10 +118,6 @@ class Lexer {
 private:
     std::ifstream inFile; // std::ifstream needs to be included from <fstream>
     DFA *dfa;
-    int current_line;    // Keep track of current line
-    int current_column;  // Keep track of current column
-    char peek_char;      // For peeking at the next character without consuming it
-    bool has_peeked;     // Flag to indicate if a character has been peeked
 
     char get_char(); // Helper to get next char and update line/column
     void unget_char(char ch); // Helper to put char back and update line/column
@@ -130,6 +127,7 @@ public:
     ~Lexer();
 
     Token get_next_token();
+    std::vector<Token> get_tokens_list();
 };
 
 #endif

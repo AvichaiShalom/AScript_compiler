@@ -1,5 +1,3 @@
-#include <iostream>
-#include <fstream>
 #include "../include/Lexer.hpp"
 using namespace std;
 
@@ -502,6 +500,7 @@ Lexer::~Lexer() {
     if (inFile.is_open()) {
         inFile.close();
     }
+    delete dfa;
 }
 
 Token Lexer::get_next_token() {
@@ -520,11 +519,11 @@ Token Lexer::get_next_token() {
         column++;
         next_state = dfa->get_next_state(current_state, ch);
         //cout << "Current state: " << current_state << ", Next state: " << next_state << endl;
-        if(next_state != START) {
-            //cout << ch << " " << current_state << " -> " << next_state << endl;
+        if(dfa->get_token_type(next_state) != START) {
+            //cout << ch << " " << current_state << " -> " << next_state << endl
             if(next_state == -1) {
-                if(dfa->get_token_type(current_state) == ERROR) {
-                    return Token();
+                if(dfa->get_token_type(current_state) == ERROR || dfa->get_token_type(current_state) == START) {
+                    return Token(ERROR, "Invalid charcter: "+string(&ch), line, column);
                 }
                 else {
                     inFile.unget();
@@ -543,4 +542,15 @@ Token Lexer::get_next_token() {
     } else {
         return Token(dfa->get_token_type(current_state), token_value, line, column);
     }
+}
+
+vector<Token> Lexer::get_tokens_list() {
+    vector<Token> tokens_lst;
+    Token token;
+    token = get_next_token();
+    while(token.type != TOKEN_EOF) {
+        tokens_lst.push_back(token);
+        token = get_next_token();
+    }
+    return tokens_lst;
 }

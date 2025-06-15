@@ -80,20 +80,12 @@ int main() {
     "RETURN",
     "IDENTIFIER"
     };
-
-    DFA dfa;
-    dfa.init_state_machine();
-    dfa.init_state_token_map();
-    cout<< "===========================================" << endl;
-    cout << dfa.state_machine[0]['='] << endl;
-    cout << dfa.state_machine[1][' '] << endl;
-    cout<< "===========================================" << endl;
+    
     Lexer lexer(path);
-    Token token;
-    token.type = START;
-    while(token.type != ERROR && token.type != TOKEN_EOF) {
-        token = lexer.get_next_token();
-        cout << tokens[token.type] << ": " << token.value << endl;
+    vector<Token> tokens_lst = lexer.get_tokens_list();
+    for(Token token : tokens_lst) {
+        cout << "Token: " << tokens[token.type] << ", Value: " << token.value 
+             << ", Line: " << token.line << ", Column: " << token.column << endl;
     }
     return 0;
 }
