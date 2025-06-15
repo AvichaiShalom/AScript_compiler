@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/AScript.dir/src/Lexer.cpp.obj"
+  "CMakeFiles/AScript.dir/src/Lexer.cpp.obj.d"
   "CMakeFiles/AScript.dir/src/main.cpp.obj"
   "CMakeFiles/AScript.dir/src/main.cpp.obj.d"
   "bin/AScript.exe"

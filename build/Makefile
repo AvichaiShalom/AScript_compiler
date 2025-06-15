@@ -128,6 +128,30 @@ AScript/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\AScript.dir\build.make CMakeFiles/AScript.dir/build
 .PHONY : AScript/fast
 
+src/Lexer.obj: src/Lexer.cpp.obj
+.PHONY : src/Lexer.obj
+
+# target to build an object file
+src/Lexer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AScript.dir\build.make CMakeFiles/AScript.dir/src/Lexer.cpp.obj
+.PHONY : src/Lexer.cpp.obj
+
+src/Lexer.i: src/Lexer.cpp.i
+.PHONY : src/Lexer.i
+
+# target to preprocess a source file
+src/Lexer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AScript.dir\build.make CMakeFiles/AScript.dir/src/Lexer.cpp.i
+.PHONY : src/Lexer.cpp.i
+
+src/Lexer.s: src/Lexer.cpp.s
+.PHONY : src/Lexer.s
+
+# target to generate assembly for a file
+src/Lexer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AScript.dir\build.make CMakeFiles/AScript.dir/src/Lexer.cpp.s
+.PHONY : src/Lexer.cpp.s
+
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
 
@@ -161,6 +185,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... AScript
+	@echo ... src/Lexer.obj
+	@echo ... src/Lexer.i
+	@echo ... src/Lexer.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
