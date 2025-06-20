@@ -152,6 +152,30 @@ src/Lexer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\AScript.dir\build.make CMakeFiles/AScript.dir/src/Lexer.cpp.s
 .PHONY : src/Lexer.cpp.s
 
+src/error_handler.obj: src/error_handler.cpp.obj
+.PHONY : src/error_handler.obj
+
+# target to build an object file
+src/error_handler.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AScript.dir\build.make CMakeFiles/AScript.dir/src/error_handler.cpp.obj
+.PHONY : src/error_handler.cpp.obj
+
+src/error_handler.i: src/error_handler.cpp.i
+.PHONY : src/error_handler.i
+
+# target to preprocess a source file
+src/error_handler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AScript.dir\build.make CMakeFiles/AScript.dir/src/error_handler.cpp.i
+.PHONY : src/error_handler.cpp.i
+
+src/error_handler.s: src/error_handler.cpp.s
+.PHONY : src/error_handler.s
+
+# target to generate assembly for a file
+src/error_handler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AScript.dir\build.make CMakeFiles/AScript.dir/src/error_handler.cpp.s
+.PHONY : src/error_handler.cpp.s
+
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
 
@@ -188,6 +212,9 @@ help:
 	@echo ... src/Lexer.obj
 	@echo ... src/Lexer.i
 	@echo ... src/Lexer.s
+	@echo ... src/error_handler.obj
+	@echo ... src/error_handler.i
+	@echo ... src/error_handler.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s

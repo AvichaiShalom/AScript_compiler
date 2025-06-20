@@ -115,19 +115,16 @@ struct Token {
 
 // Lexer class declaration
 class Lexer {
-private:
-    std::ifstream inFile; // std::ifstream needs to be included from <fstream>
-    DFA *dfa;
+    private:
+        std::ifstream inFile;
+        DFA *dfa;
 
-    char get_char(); // Helper to get next char and update line/column
-    void unget_char(char ch); // Helper to put char back and update line/column
+    public:
+        Lexer(std::string fName);
+        ~Lexer();
 
-public:
-    Lexer(std::string fName);
-    ~Lexer();
-
-    Token get_next_token();
-    std::vector<Token> get_tokens_list();
+        Token get_next_token();
+        std::vector<Token> get_tokens_list();
 };
 
 #endif

@@ -312,7 +312,7 @@ void DFA::init_state_machine() {
         state_machine[56][c] = 43;
         state_machine[56][c - ('a' - 'A')] = 43;
     }
-    state_machine[56]['l'] = 54;
+    state_machine[56]['l'] = 57;
 
     for (int c = '0'; c <= '9'; c++) {
         state_machine[57][c] = 43;
@@ -482,7 +482,7 @@ void DFA::print_state_machine() {
     }
 }
 
-//stract Token
+//struct Token
 Token::Token(TokenType t, string v, int l, int c) : type(t), value(v), line(l), column(c) {}
 Token::Token() : type(ERROR), value(""), line(-1), column(-1) {}
 
@@ -509,39 +509,38 @@ Token Lexer::get_next_token() {
     int current_state = 0;
     int next_state = 0;
     string token_value = "";
+    TokenType res_token;
 
-    while(inFile.get(ch)) {
+    while(inFile.get(ch) && (next_state = dfa->get_next_state(current_state, ch)) != -1) {
         //cout << "Read character: " << ch << endl;
         if (ch == '\n') {
             line++;
             column = 0;
         }
         column++;
-        next_state = dfa->get_next_state(current_state, ch);
-        //cout << "Current state: " << current_state << ", Next state: " << next_state << endl;
-        if(dfa->get_token_type(next_state) != START) {
-            //cout << ch << " " << current_state << " -> " << next_state << endl
-            if(next_state == -1) {
-                if(dfa->get_token_type(current_state) == ERROR || dfa->get_token_type(current_state) == START) {
-                    return Token(ERROR, "Invalid charcter: "+string(&ch), line, column);
-                }
-                else {
-                    inFile.unget();
-                    return Token(dfa->get_token_type(current_state), token_value, line, column);
-                }
-            }
-            else {
-                current_state = next_state;
-                token_value += ch;
-            }
+
+        res_token = dfa->get_token_type(next_state);
+        if(res_token != START) {
+            current_state = next_state;
+            token_value += ch;
         }
     }
-    
-    if (dfa->get_token_type(current_state) == ERROR || dfa->get_token_type(current_state) == START) {
-        return Token(TOKEN_EOF, "EOF", line, column);
+
+    res_token = dfa->get_token_type(current_state);
+    if (res_token == ERROR || res_token == START) {
+        if(inFile.eof()) {
+            res_token = TOKEN_EOF;
+            token_value = "EOF";
+        } else {
+            res_token = ERROR;
+            token_value = string(1, ch);
+        }
     } else {
-        return Token(dfa->get_token_type(current_state), token_value, line, column);
+        inFile.unget();
+        column--;
     }
+
+    return Token(res_token, token_value, line, column);
 }
 
 vector<Token> Lexer::get_tokens_list() {
@@ -552,5 +551,6 @@ vector<Token> Lexer::get_tokens_list() {
         tokens_lst.push_back(token);
         token = get_next_token();
     }
+    tokens_lst.push_back(token);// add EOF token
     return tokens_lst;
 }

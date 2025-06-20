@@ -1,5 +1,5 @@
-CMakeFiles/AScript.dir/src/main.cpp.obj: \
- C:\Users\avich\Desktop\AScript_compiler\src\main.cpp \
+CMakeFiles/AScript.dir/src/error_handler.cpp.obj: \
+ C:\Users\avich\Desktop\AScript_compiler\src\error_handler.cpp \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\iostream \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++config.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\os_defines.h \
@@ -111,5 +111,4 @@ CMakeFiles/AScript.dir/src/main.cpp.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\codecvt.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\basic_file.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++io.h \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\fstream.tcc \
- c:\users\avich\desktop\ascript_compiler\include\error_handler.hpp
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\fstream.tcc
