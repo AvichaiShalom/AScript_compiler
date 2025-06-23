@@ -169,6 +169,9 @@ int main() {
     PIPE_EQUAL,
     AMPERSAND_EQUAL,
 
+    ERROR,
+    ERROR,
+
     //===== MISC =====
     RETURN,
     IDENTIFIER,
